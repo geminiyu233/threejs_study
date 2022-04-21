@@ -2,21 +2,56 @@
  * @Author: yushuang
  * @Date: 2022-04-21 16:15:46
  * @LastEditors: yushuang
- * @LastEditTime: 2022-04-21 16:18:22
+ * @LastEditTime: 2022-04-21 16:23:27
  * @Description: 
 -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script type="module" src="../libs/three.js/Three.js"></script>
-</head>
-<body>
-  <script type="module">
-    
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第一个three.js示例</title>
+    <script type="module" src="../libs/three.js/Three.js"></script>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from "../libs/three.js/Three.js";
+
+      let camera, scene, renderer;
+      let geometry, material, mesh;
+
+      init();
+
+      function init() {
+        camera = new THREE.PerspectiveCamera(
+          70,
+          window.innerWidth / window.innerHeight,
+          0.01,
+          10
+        );
+        camera.position.z = 1;
+
+        scene = new THREE.Scene();
+
+        geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+        material = new THREE.MeshNormalMaterial();
+
+        mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setAnimationLoop(animation);
+        document.body.appendChild(renderer.domElement);
+      }
+
+      function animation(time) {
+        mesh.rotation.x = time / 2000;
+        mesh.rotation.y = time / 1000;
+
+        renderer.render(scene, camera);
+      }
+    </script>
+  </body>
 </html>
